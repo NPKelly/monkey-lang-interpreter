@@ -16,8 +16,8 @@ func TestLetStatement(t *testing.T) {
 		{"let x = 5;", "x", 5},
 		{"let y = 10;", "y", 10},
 		{"let foobar = test;", "foobar", "test"},
-		{"let baz = true;", "baz", "true"},
-		{"let bar = false;", "bar", "false"},
+		{"let baz = true;", "baz", true},
+		{"let bar = false;", "bar", false},
 	}
 
 	for _, tt := range tests {
@@ -36,12 +36,10 @@ func TestLetStatement(t *testing.T) {
 			return
 		}
 
-		//TODO: The expression portion of a let statement is not parsed yet.
-
-		// val := stmt.(*ast.LetStatement).Value
-		// if !testLiteralExpression(t, val, tt.expectedValue) {
-		// 	return
-		// }
+		val := stmt.(*ast.LetStatement).Value
+		if !testLiteralExpression(t, val, tt.expectedValue) {
+			return
+		}
 	}
 }
 
@@ -77,10 +75,9 @@ func TestReturnStatement(t *testing.T) {
 				returnStmt.TokenLiteral())
 		}
 
-		// TODO: The expression portion of a return statement is not parsed yet.
-		// if testLiteralExpression(t, returnStmt.ReturnValue, tt.expectedValue) {
-		// 	return
-		// }
+		if testLiteralExpression(t, returnStmt.ReturnValue, tt.expectedValue) {
+			return
+		}
 	}
 }
 
